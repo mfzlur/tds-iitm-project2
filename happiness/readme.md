@@ -1,4 +1,3 @@
-```markdown
 # Happiness Dataset Analysis
 
 ## Overview
