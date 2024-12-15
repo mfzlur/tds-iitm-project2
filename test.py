@@ -218,12 +218,13 @@ def llm_code_for_data_analysis():
             try:
                 if time.time() - start_time > time_threshold:
                     print('Maximum time limit reached discarding the llm generated code' + "\n")
+                    self_analysis(df)
                     break
                 cleaned_output = str(output).replace('```python', '').replace('```', '').strip()
                 if cleaned_output is not None:
                     print(type(cleaned_output))
-                    exec(cleaned_output, globals())  # Execute in the global scope
-                    llm_analysis()
+                    exec(cleaned_output)  # Execute in the global scope
+                    # llm_analysis()
 
                     print(f'Hurray! LLM code worked and executed successfully without any errors on attempt no: {_}')
     
@@ -231,6 +232,7 @@ def llm_code_for_data_analysis():
             except Exception as e:
                 if _ == 10:
                     print('Maximum Attempts reached discarding the llm generated code' + "\n")
+                    self_analysis(df)
                     break
          
                 print(f'Attempt no: {_} for llm generated code execution' + "\n")
@@ -367,20 +369,8 @@ if __name__ == "__main__":
     df = read_file(filepath)
     num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing_df, corr_matrix = get_metadata(df)
 
-    cleaned_output = llm_code_for_data_analysis()
-    if cleaned_output is not None:
-        print(type(cleaned_output))
-        exec(str(cleaned_output), globals())  # Execute the cleaned_output
-
-    try:
-
-        llm_analysis()
-        print("Analysis completed using llm only")
-        print("Now creating a story for the dataset...")
-        
-    except Exception as e:
-        print("Something is wrong with LLM code")
-        self_analysis(df)
+    llm_code_for_data_analysis()
+   
         
     try:
         print('Story created with function calling successfully!!')
