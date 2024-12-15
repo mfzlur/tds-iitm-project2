@@ -77,7 +77,7 @@ The count plot generated provides visual insight into the number of entries per 
 
 ## Missing Values Analysis
 
-![Missing Values](media/missing_values.png)
+![Missing Values](missing_values.png)
 
 The missing values plot indicates that only a couple of columns (`date` and `by`) have missing data, which is crucial for any future statistical analysis. Addressing the missing values in the 'by' column first should be prioritized, given its significance and the potential insights lost.
 
