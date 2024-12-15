@@ -224,7 +224,7 @@ def llm_code_for_data_analysis():
                 if time.time() - start_time > time_threshold:
                     print('Maximum time limit reached discarding the llm generated code' + "\n")
                     break
-                cleaned_output = output.replace('```python', '').replace('```', '').strip()
+                cleaned_output = str(output).replace('```python', '').replace('```', '').strip()
                 exec(cleaned_output, globals())  # Execute in the global scope
                 llm_analysis()
 
@@ -250,7 +250,7 @@ def llm_code_for_data_analysis():
                 output = result['choices'][0]['message']['content']
 
 
-        return output.replace('```python', '').replace('```', '').strip()
+        return str(output).replace('```python', '').replace('```', '').strip()
 
 
     else:
