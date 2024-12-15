@@ -357,98 +357,6 @@ def llm_response(num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing
     else:
         print(f"Error: {response.status_code}, {response.text}")
 
-def llm_response_with_function_calling():
-    # Retrieve metadata
-    num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing_df, corr_matrix, folder_name = get_metadata(df)
-
-
-
-    api_key = openai_api_key
-
-    # Serialize missing_df and corr_matrix for readability
-    missing_df_serialized = missing_df.to_dict(orient='records')
-    corr_matrix_serialized = corr_matrix.to_dict()
-
-    # Retrieve PNG file names in the folder
-    png_files = []
-    for file_name in os.listdir(folder_name):
-        file_path = os.path.join(folder_name, file_name)
-        if os.path.isfile(file_path) and file_name.lower().endswith('.png'):
-            png_files.append(file_name)
-
-    png_files_str = ', '.join(png_files)
-
-    # API endpoint
-    url = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
-
-    # Pass metadata into the story generation prompt
-    prompt = f"""
-    Here is the information already available about the data:
-    - Numerical columns: {num_cols}
-    - Numerical summary: {num_cols_summary}
-    - Categorical columns: {cat_cols}
-    - Categorical summary: {cat_cols_summary}
-    - Missing statistics: {json.dumps(missing_df_serialized, indent=2)}
-    - Correlation matrix: {json.dumps(corr_matrix_serialized, indent=2)}
-
-    There are few plots available in the folder '{folder_name}' and their names are:
-    {png_files_str}
-
-    You need to create a detailed story about this dataset:
-        be as descriptive as possible,
-        be comprehensive,
-        do not leave any small information,
-        try to make it as longer as possible,
-        try to read all the content provided as much as you can and find something interesting out of it and add it to the ,
-        you are free to use your own creativity in the ,
-        you can add your own insights from all the experiece you have in the world,
-        write some summary about each column and plots,
-        add recommendations to the reader or developer
-        also must embed the summary plot images in the story for link of the image use ![image description](image_file_name.png)
-
-        the story should includes relevant results, ensures proper Markdown formatting, logically sequences the narratives (data description, analysis, insights, implications), integrates visualizations at the right places, and  emphasizes significant findings and implications
-    
-        the story will be written in readme.md file so give the text output such that the output can directly be pasted at readme.md 
-
-    """
-
-    # API request for story generation
-    story_data = {
-        "model": "gpt-4o-mini",
-        "messages": [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant."
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-    }
-
-    # Make the API call
-    story_response = requests.post(url, headers={
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }, json=story_data)
-
-    if story_response.status_code == 200:
-        story_result = story_response.json()
-        output = story_result['choices'][0]['message']['content'] 
-
-        cleaned_output = output.replace("```markdown", "").replace("```", "").strip()
-
-        # Save the output to README.md
-        readme_path = os.path.join(folder_name, 'readme.md')
-        with open(readme_path, 'w') as f:
-            f.write(cleaned_output)
-
-        print("README.md generated successfully.")
-
-    else:
-        print(f"Error in story generation: {story_response.status_code}, {story_response.text}")
-
 
 
 if __name__ == "__main__":
@@ -480,7 +388,6 @@ if __name__ == "__main__":
         self_analysis(df)
         
     try:
-        llm_response_with_function_calling()
         print('Story created with function calling successfully!!')
         llm_response(num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing_df, corr_matrix, folder_name)
 
