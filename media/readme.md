@@ -34,7 +34,7 @@ The numerical columns in our dataset are `overall`, `quality`, and `repeatabilit
 
 ### Visual Representation of Numerical Variables
 
-![Distribution of Numerical Variables](media/distribution_of_numerical_variables.png)
+![Distribution of Numerical Variables](distribution_of_numerical_variables.png)
 
 The distribution plot highlights that while most records cluster around the mean for `overall` and `quality`, the `repeatability` variable skews towards its lower end. This insight into distributions can help focus attention on improving repeatability as it seems to be a weaker aspect of the dataset.
 
@@ -71,7 +71,7 @@ The categorical columns consist of `date`, `language`, `type`, `title`, and `by`
 
 ### Visualizing Categorical Data
 
-![Count Plot of First Categorical Column](media/count_plot_first_categorical_column.png)
+![Count Plot of First Categorical Column](count_plot_first_categorical_column.png)
 
 The count plot generated provides visual insight into the number of entries per category, indicating the diversity and frequency of contributions from various authors or types.
 
@@ -83,7 +83,7 @@ The missing values plot indicates that only a couple of columns (`date` and `by`
 
 ## Correlation Analysis
 
-![Correlation Matrix](media/correlation_matrix.png)
+![Correlation Matrix](correlation_matrix.png)
 
 The correlation matrix reveals intriguing interrelationships among the numerical columns:
 - The highest correlation is between `overall` and `quality` (0.82), suggesting that improving quality ratings may significantly enhance overall ratings.
@@ -91,7 +91,7 @@ The correlation matrix reveals intriguing interrelationships among the numerical
 
 ### Box Plots of Numerical Columns
 
-![Boxplot for Numerical Columns](media/boxplot_num_cols.png)
+![Boxplot for Numerical Columns](boxplot_num_cols.png)
 
 The boxplot for numerical columns displays the spread and central tendency of these metrics. Here, we see how susceptible the overall and quality scores are to outliers, allowing us to understand the moderation in these ratings, urging the need for further examinations on the extreme values in `repeatability`.
 
