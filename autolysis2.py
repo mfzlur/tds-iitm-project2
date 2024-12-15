@@ -226,6 +226,7 @@ def llm_code_for_data_analysis():
                     break
                 cleaned_output = str(output).replace('```python', '').replace('```', '').strip()
                 if cleaned_output is not None:
+                    print(type(cleaned_output))
                     exec(cleaned_output, globals())  # Execute in the global scope
                     llm_analysis()
 
@@ -465,6 +466,7 @@ if __name__ == "__main__":
 
     cleaned_output = llm_code_for_data_analysis()
     if cleaned_output is not None:
+        print(type(cleaned_output))
         exec(str(cleaned_output), globals())  # Execute the cleaned_output
 
     try:
