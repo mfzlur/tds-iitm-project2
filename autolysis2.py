@@ -28,8 +28,6 @@ load_dotenv()
 
 # Access the variables
 openai_api_key = os.getenv("OPENAI_PROXY_API_KEY")
-openai_api_key_personal = os.getenv("OPENAI_KEY")
-
 
 folder_name = None  # Global variable to store folder name
 
@@ -108,7 +106,6 @@ def self_analysis(df):
         plt.savefig(f"{folder_name}/missing_values.png", bbox_inches='tight')
         plt.close()
 
-
         # Boxplot for all numerical columns
         df_melted = df[num_cols].melt(var_name="Columns", value_name="Values")
         plt.figure(figsize=(8,12))
@@ -118,8 +115,6 @@ def self_analysis(df):
         plt.close()
 
     if len(cat_cols) > 0:
-
-
         # Loop through the categorical columns and calculate unique categories
         unique_counts = [df[col].nunique() for col in cat_cols]
         # Create a bar plot
