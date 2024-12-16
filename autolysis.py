@@ -174,8 +174,14 @@ def llm_code_for_data_analysis():
 
             finally based on the name of columns and column info you can do some more analysis as you wish and if you can, create few more plots  too and if you create plots make sure you save the plots as you did in step 1-4 and apply plt.close() after each plot
 
-            make sure you enhance plots/charts with titles, axis labels, legends, and annotations, and uses colors effectively
+            make sure your code enhances readability, clarity, and quality, and creates plots/charts with titles, axis labels, legends, and annotations, and uses colors effectively
 
+            the below warning could come while executing the code provided by you if possible try to avoid it
+            "<string>:39: FutureWarning: 
+
+            Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect."
+
+            make sure you call the function llm_analysis() at the end of your code
 
             your output should contain python code only and nothing else comments are fine
 
@@ -223,11 +229,11 @@ def llm_code_for_data_analysis():
             try:
                 if time.time() - start_time > time_threshold:
                     print('Maximum time limit reached discarding the llm generated code' + "\n")
-                    break
+                    self_analysis(df)
+                    return
                 cleaned_output = str(output).replace('```python', '').replace('```', '').strip()
                 if cleaned_output is not None:
-                    exec(cleaned_output, globals())  # Execute in the global scope
-                    llm_analysis()
+                    exec(cleaned_output)  # Execute in the global scope
 
                     print(f'Hurray! LLM code worked and executed successfully without any errors on attempt no: {_}')
     
@@ -235,7 +241,8 @@ def llm_code_for_data_analysis():
             except Exception as e:
                 if _ == 10:
                     print('Maximum Attempts reached discarding the llm generated code' + "\n")
-                    break
+                    self_analysis(df)
+                    return
          
                 print(f'Attempt no: {_} for llm generated code execution' + "\n")
                 print(f'llm generated code is not getting executed because of the error: {e}' + "\n") 
@@ -251,7 +258,7 @@ def llm_code_for_data_analysis():
                 output = result['choices'][0]['message']['content']
 
 
-        return str(output).replace('```python', '').replace('```', '').strip()
+        print('Analysis completed' + "\n" + 'Generating story now...')
 
 
     else:
@@ -463,19 +470,8 @@ if __name__ == "__main__":
     df = read_file(filepath)
     num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing_df, corr_matrix = get_metadata(df)
 
-    cleaned_output = llm_code_for_data_analysis()
-    if cleaned_output is not None:
-        exec(str(cleaned_output), globals())  # Execute the cleaned_output
-
-    try:
-
-        llm_analysis()
-        print("Analysis completed using llm only")
-        print("Now creating a story for the dataset...")
-        
-    except Exception as e:
-        print("Something is wrong with LLM code")
-        self_analysis(df)
+    llm_code_for_data_analysis()
+   
         
     try:
         llm_response_with_function_calling()
