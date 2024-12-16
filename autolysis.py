@@ -322,7 +322,7 @@ def llm_response(num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing
 
             the story should show some deep understanding of the dataset, and should not be too short.
         
-            the story will be written in readme.md file so give the text output such that the output can directly be pasted at readme.md 
+            the story will be written in README.md file so give the text output such that the output can directly be pasted at README.md 
             """
 
     # Request headers
@@ -414,7 +414,7 @@ def llm_response_with_function_calling():
 
         the story should includes relevant results, ensures proper Markdown formatting, logically sequences the narratives (data description, analysis, insights, implications), integrates visualizations at the right places, and  emphasizes significant findings and implications
     
-        the story will be written in readme.md file so give the text output such that the output can directly be pasted at readme.md 
+        the story will be written in README.md file so give the text output such that the output can directly be pasted at README.md 
 
     """
 
@@ -446,7 +446,7 @@ def llm_response_with_function_calling():
         cleaned_output = output.replace("```markdown", "").replace("```", "").strip()
 
         # Save the output to README.md
-        readme_path = os.path.join(folder_name, 'readme.md')
+        readme_path = os.path.join(folder_name, 'README.md')
         with open(readme_path, 'w') as f:
             f.write(cleaned_output)
 
