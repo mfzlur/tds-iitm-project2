@@ -356,7 +356,7 @@ def llm_response(num_cols, num_cols_summary, cat_cols, cat_cols_summary, missing
 
         cleaned_output = output.replace("```markdown", "").replace("```", "").strip()
 
-        with open(f"{folder_name}/readme.md", 'w') as f:
+        with open(f"{folder_name}/README.md", 'w') as f:
             f.write(cleaned_output)
 
 
