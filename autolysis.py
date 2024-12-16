@@ -141,9 +141,6 @@ def llm_code_for_data_analysis():
     # API endpoint
     url = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
 
-    global folder_name
-    global existing_code
-    global caused_error
     existing_code = None
     caused_error = None
     
