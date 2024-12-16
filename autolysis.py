@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Access the variables
-openai_api_key = os.getenv("OPENAI_PROXY_API_KEY")
+openai_api_key = os.getenv("AIPROXY_TOKEN")
 openai_api_key_personal = os.getenv("OPENAI_KEY")
 
 
